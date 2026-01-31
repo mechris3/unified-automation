@@ -2,7 +2,7 @@
 
 This document serves as a complete blueprint for generating the `unified-automation` repository. It contains the architecture, directory structure, and source code for the core components.
 
-**Goal:** Create a portable, drop-in testing framework that executes the SAME test logic using either Puppeteer (for fast development/debugging) or Playwright (for robust CI/CD).
+**Goal:** Create a portable, drop-in testing framework that executes the SAME test logic (written against a `UnifiedAdapter` interface) using either Puppeteer (for fast development/debugging) or Playwright (for robust CI/CD).
 
 ## 1.1 Mandatory Selector Standard
 

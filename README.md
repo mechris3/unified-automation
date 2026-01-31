@@ -9,7 +9,8 @@ This framework unifies test logic across multiple browser engines (Puppeteer, Pl
 
 ## 🚀 Key Features
 
-*   **Unified API**: Write journeys once using a standardized `UnifiedAdapter`.
+*   **Unified API**: Write journeys once against a standardized `UnifiedAdapter` interface, implemented by high-performance Puppeteer and Playwright adapters.
+*   **Symmetrical Architecture**: Identical project structure for Puppeteer and Playwright runners, creating a seamless transition between development and CI.
 *   **Page Object Model (POM)**: Enforced decoupling of test logic and element selectors.
 *   **Dynamic Discovery**: Automatic loading of journey files—no manual registration required.
 *   **Dual-Engine Support**: Run the same journey with Puppeteer (Dev) or Playwright (CI).
