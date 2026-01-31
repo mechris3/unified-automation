@@ -189,16 +189,14 @@ The `test-runner-ui` serves as the centralized hub for the entire framework. It 
 At the heart of this framework is the **Unified Adapter Pattern**, which decouples your test logic from the underlying browser engine.
 
 ```mermaid
-graph TD
-    subgraph Infrastructure ["Test Logic & Infrastructure<br/>(@unified-automation/test-infrastructure)<br/>&nbsp;"]
-        direction TB
+graph LR
+    subgraph Infrastructure ["Logic & Infrastructure"]
         J["Journey"] --> P["Page Objects (POM)"]
     end
     
     P --> BA["<b>UnifiedAdapter Interface</b>"]
     
-    subgraph Adapters ["Engines & Adapters<br/>(@unified-automation/adapters)<br/>&nbsp;"]
-        direction TB
+    subgraph Engines ["Engines & Adapters"]
         BA --> PA["Puppeteer Implementation"]
         BA --> PL["Playwright Implementation"]
     end
