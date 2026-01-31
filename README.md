@@ -190,14 +190,14 @@ At the heart of this framework is the **Unified Adapter Pattern**, which decoupl
 
 ```mermaid
 graph TD
-    subgraph "Test Logic & Infrastructure<br/>(@unified-automation/test-infrastructure)"
+    subgraph Infrastructure ["Test Logic & Infrastructure<br/>(@unified-automation/test-infrastructure)<br/>&nbsp;"]
         direction TB
         J["Journey"] --> P["Page Objects (POM)"]
     end
     
     P --> BA["<b>UnifiedAdapter Interface</b>"]
     
-    subgraph "Engines & Adapters<br/>(@unified-automation/adapters)"
+    subgraph Adapters ["Engines & Adapters<br/>(@unified-automation/adapters)<br/>&nbsp;"]
         direction TB
         BA --> PA["Puppeteer Implementation"]
         BA --> PL["Playwright Implementation"]
