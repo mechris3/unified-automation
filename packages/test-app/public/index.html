@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Automation Test App</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Test Application</h1>
+            <p class="subtitle">A target environment for verifying automation runners</p>
+        </header>
+
+        <main>
+            <!-- SECTION 1: Standard Controls -->
+            <section class="card">
+                <h2>Form Controls</h2>
+                <form id="sample-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" data-testid="input-username" placeholder="Enter username">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" data-testid="input-password" placeholder="Enter password">
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group half">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" data-testid="input-age" value="25">
+                        </div>
+                        <div class="form-group half">
+                            <label for="role">Role</label>
+                            <select id="role" data-testid="select-role">
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                                <option value="editor">Editor</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferences</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-container">
+                                <input type="checkbox" data-testid="checkbox-newsletter" checked>
+                                <span class="checkmark"></span>
+                                Subscribe to newsletter
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" data-testid="checkbox-terms">
+                                <span class="checkmark"></span>
+                                I agree to terms
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Status</label>
+                        <div class="radio-group">
+                            <label class="radio-container">
+                                <input type="radio" name="status" value="active" data-testid="radio-active" checked>
+                                <span class="radio-mark"></span>
+                                Active
+                            </label>
+                            <label class="radio-container">
+                                <input type="radio" name="status" value="inactive" data-testid="radio-inactive">
+                                <span class="radio-mark"></span>
+                                Inactive
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button type="button" class="btn primary" data-testid="btn-submit">Submit</button>
+                        <button type="button" class="btn secondary" data-testid="btn-reset">Reset</button>
+                    </div>
+
+                    <div id="form-result" class="result-box hidden" data-testid="form-result"></div>
+                </form>
+            </section>
+
+            <!-- SECTION 2: Complex Interactions -->
+            <section class="card">
+                <h2>Complex Interactions</h2>
+                
+                <div class="component-box">
+                    <h3>Modal Dialog</h3>
+                    <button class="btn" data-testid="btn-open-modal">Open Modal</button>
+                </div>
+
+                <div class="component-box">
+                    <h3>Delayed Action</h3>
+                    <button class="btn" data-testid="btn-delayed">
+                        <span class="btn-text">Click me (3s delay)</span>
+                        <span class="loader hidden"></span>
+                    </button>
+                    <p id="delayed-result" data-testid="text-delayed-result"></p>
+                </div>
+            </section>
+
+            <!-- SECTION 3: File Upload -->
+            <section class="card">
+                <h2>File Upload</h2>
+                <div class="upload-zone" id="drop-zone" data-testid="upload-zone">
+                    <div class="upload-icon">📁</div>
+                    <p>Drag & drop files here or click to browse</p>
+                    <input type="file" id="file-input" data-testid="input-file" hidden>
+                    <button class="btn small">Browse Files</button>
+                </div>
+                <div id="upload-status" class="status-message" data-testid="upload-status"></div>
+            </section>
+
+            <!-- SECTION 4: Data Grid -->
+            <section class="card">
+                <h2>Data Grid</h2>
+                <table class="data-table" data-testid="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-testid="row-1">
+                            <td>1</td>
+                            <td>Alice Johnson</td>
+                            <td>alice@example.com</td>
+                            <td><span class="badge active">Active</span></td>
+                            <td><button class="btn-icon" data-testid="btn-edit-1">✎</button></td>
+                        </tr>
+                        <tr data-testid="row-2">
+                            <td>2</td>
+                            <td>Bob Smith</td>
+                            <td>bob@example.com</td>
+                            <td><span class="badge inactive">Inactive</span></td>
+                            <td><button class="btn-icon" data-testid="btn-edit-2">✎</button></td>
+                        </tr>
+                        <tr data-testid="row-3">
+                            <td>3</td>
+                            <td>Charlie Brown</td>
+                            <td>charlie@example.com</td>
+                            <td><span class="badge pending">Pending</span></td>
+                            <td><button class="btn-icon" data-testid="btn-edit-3">✎</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal-overlay" class="modal-overlay hidden" data-testid="modal-overlay">
+        <div class="modal">
+            <h3>Confirmation</h3>
+            <p>This is a modal dialog interaction test.</p>
+            <div class="modal-actions">
+                <button class="btn secondary" data-testid="modal-close">Close</button>
+                <button class="btn primary" data-testid="modal-confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

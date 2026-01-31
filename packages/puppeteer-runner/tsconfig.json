@@ -1,0 +1,29 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "dist",
+        "rootDir": "src",
+        "paths": {
+            "@unified-automation/adapters": [
+                "../adapters/src"
+            ],
+            "@unified-automation/adapters/*": [
+                "../adapters/src/*"
+            ],
+            "@unified-automation/*": [
+                "../*/src"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "references": [
+        {
+            "path": "../adapters"
+        },
+        {
+            "path": "../test-infrastructure"
+        }
+    ]
+}

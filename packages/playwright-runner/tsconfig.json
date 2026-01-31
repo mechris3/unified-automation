@@ -1,0 +1,32 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "dist",
+        "rootDir": ".",
+        "paths": {
+            "@unified-automation/adapters": [
+                "../adapters/src"
+            ],
+            "@unified-automation/adapters/*": [
+                "../adapters/src/*"
+            ],
+            "@unified-automation/*": [
+                "../packages/*/src"
+            ]
+        }
+    },
+    "references": [
+        {
+            "path": "../adapters"
+        },
+        {
+            "path": "../test-infrastructure"
+        }
+    ],
+    "exclude": [
+        "dist",
+        "test-results",
+        "node_modules",
+        "playwright-report"
+    ]
+}

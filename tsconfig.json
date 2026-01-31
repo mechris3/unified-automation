@@ -1,0 +1,20 @@
+{
+    "files": [],
+    "references": [
+        {
+            "path": "./packages/adapter"
+        },
+        {
+            "path": "./packages/test-infrastructure"
+        },
+        {
+            "path": "./packages/dev-runner"
+        },
+        {
+            "path": "./packages/test-runner-ui"
+        },
+        {
+            "path": "./e2e"
+        }
+    ]
+}

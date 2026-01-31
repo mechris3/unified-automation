@@ -1,0 +1,19 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "dist",
+        "rootDir": "."
+    },
+    "include": [
+        "server/**/*",
+        "public/**/*"
+    ],
+    "references": [
+        {
+            "path": "../dev-runner"
+        },
+        {
+            "path": "../../e2e"
+        }
+    ]
+}

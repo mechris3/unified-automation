@@ -1,0 +1,18 @@
+{
+    "name": "@unified-automation/puppeteer-runner",
+    "version": "1.0.0",
+    "scripts": {
+        "execute": "ts-node -r tsconfig-paths/register src/run-journey.ts"
+    },
+    "dependencies": {
+        "@unified-automation/adapters": "*",
+        "@unified-automation/test-infrastructure": "*",
+        "puppeteer": "^22.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^18.19.130",
+        "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
+        "typescript": "^5.9.3"
+    }
+}

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Automation Runner</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --sidebar-color: #161b22;
+            --text-color: #c9d1d9;
+            --border-color: #30363d;
+            --primary: #58a6ff;
+            --success: #238636;
+            --danger: #da3633;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+        }
+        #sidebar {
+            width: 300px;
+            background-color: var(--sidebar-color);
+            border-right: 1px solid var(--border-color);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        #main {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        h2 { margin-top: 0; }
+        .control-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        select, button {
+            width: 100%;
+            padding: 8px;
+            background: #21262d;
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button.primary { background-color: var(--success); border-color: rgba(27,31,35,0.15); }
+        button.stop { background-color: var(--danger); }
+        .journey-list {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+        .journey-item {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .journey-item:hover { background-color: #21262d; }
+        .journey-item input { margin-right: 10px; }
+        #logs {
+            flex: 1;
+            background-color: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px;
+            font-family: monospace;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .log-entry { margin: 2px 0; }
+        .log-error { color: #f85149; }
+        .log-success { color: #3fb950; }
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .tab.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+        .tab-content {
+            display: none;
+            flex: 1;
+            overflow: hidden;
+            flex-direction: column;
+        }
+        .tab-content.active {
+            display: flex;
+        }
+        .config-form {
+            padding: 20px;
+            background: var(--sidebar-color);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+        .config-group {
+            margin-bottom: 15px;
+        }
+        .config-group label {
+            font-size: 14px;
+            color: #8b949e;
+        }
+        .config-group input {
+            width: 100%;
+            padding: 10px;
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            color: white;
+            border-radius: 6px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        .config-hint {
+            font-size: 11px;
+            color: #484f58;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h2>Unified Automation</h2>
+        
+        <div class="control-group">
+            <label>Tool</label>
+            <select id="toolSelect">
+                <option value="puppeteer">Puppeteer (Dev)</option>
+                <option value="playwright">Playwright (CI/E2E)</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label>Mode</label>
+            <select id="modeSelect">
+                <option value="headed">Headed</option>
+                <option value="headless">Headless</option>
+            </select>
+        </div>
+
+        <div class="journey-list" id="journeyList">
+            <!-- Journeys will be populated here -->
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button id="runBtn" class="primary">Run Selected</button>
+            <button id="stopBtn" class="stop" style="display: none; margin-top: 10px;">Stop</button>
+            <div id="reportContainer" style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 20px; display: none;">
+                <button id="reportBtn" style="background: #21262d; border-color: var(--primary); color: var(--primary);">View Playwright Report</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="tabs">
+            <div class="tab active" data-tab="console">Console</div>
+            <div class="tab" data-tab="config">Configuration</div>
+        </div>
+
+        <div id="console-tab" class="tab-content active">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0;">Live Output</h3>
+                <div style="display: flex; gap: 8px;">
+                    <button id="clearBtn" style="width: auto; padding: 4px 12px; font-size: 12px; background: #21262d;">Clear Console</button>
+                    <button id="copyBtn" style="width: auto; padding: 4px 12px; font-size: 12px;">Copy Console</button>
+                </div>
+            </div>
+            <div id="logs"></div>
+        </div>
+
+        <div id="config-tab" class="tab-content">
+            <h3 style="margin-top: 0;">Environment Settings</h3>
+            <div class="config-form">
+                <div class="config-group">
+                    <label for="config-app-url">Application URL (APP_URL)</label>
+                    <input type="text" id="config-app-url" placeholder="http://localhost:3002">
+                    <div class="config-hint">The base URL your journeys will navigate to.</div>
+                </div>
+
+                <div class="config-group">
+                    <label for="config-extension-path">Extension Path (EXTENSION_PATH)</label>
+                    <input type="text" id="config-extension-path" placeholder="/path/to/extracted/extension">
+                    <div class="config-hint">Absolute path to an unpacked browser extension.</div>
+                </div>
+
+                <div class="config-group">
+                    <label for="config-user-data-dir">Browser Profile Path (CHROME_USER_DATA_DIR)</label>
+                    <input type="text" id="config-user-data-dir" placeholder="/tmp/custom-profile">
+                    <div class="config-hint">Leave blank to use the default temporary profile.</div>
+                </div>
+            </div>
+            <div style="margin-top: 15px; color: #8b949e; font-size: 12px;">
+                <p>💡 These settings will be passed as environment variables to each journey run.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

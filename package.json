@@ -1,0 +1,21 @@
+{
+    "name": "unified-automation",
+    "version": "1.0.0",
+    "license": "MIT",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "start": "concurrently \"npm run start --workspace=@unified-automation/test-app\" \"npm run start --workspace=@unified-automation/test-runner-ui\"",
+        "puppeteer-runner": "npm run execute --workspace=@unified-automation/puppeteer-runner --",
+        "playwright-runner": "npm run test --workspace=@unified-automation/playwright-runner --",
+        "build": "tsc -b"
+    },
+    "devDependencies": {
+        "@types/node": "^18.0.0",
+        "concurrently": "^9.2.1",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.0.0"
+    }
+}

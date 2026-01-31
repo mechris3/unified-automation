@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "ES2020",
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "paths": {
+            "@unified-automation/adapters": [
+                "packages/adapters/src"
+            ],
+            "@unified-automation/adapters/*": [
+                "packages/adapters/src/*"
+            ],
+            "@unified-automation/test-infrastructure": [
+                "packages/test-infrastructure/src"
+            ],
+            "@unified-automation/test-infrastructure/*": [
+                "packages/test-infrastructure/src/*"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

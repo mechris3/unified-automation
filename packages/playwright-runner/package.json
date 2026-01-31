@@ -1,0 +1,17 @@
+{
+    "name": "@unified-automation/playwright-runner",
+    "version": "1.0.0",
+    "scripts": {
+        "test": "playwright test",
+        "test-single": "playwright test",
+        "build": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@playwright/test": "^1.40.0",
+        "@unified-automation/adapters": "*",
+        "@unified-automation/test-infrastructure": "*"
+    },
+    "devDependencies": {
+        "tsconfig-paths": "^4.2.0"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "name": "@unified-automation/adapters",
+    "version": "1.0.0",
+    "main": "src/index.ts",
+    "types": "src/index.ts",
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "puppeteer": "^22.0.0",
+        "@playwright/test": "^1.40.0"
+    }
+}

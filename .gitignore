@@ -1,0 +1,23 @@
+# Dependencies
+node_modules
+packages/*/node_modules
+
+# Build Artifacts
+dist
+packages/*/dist
+*.tsbuildinfo
+
+# Test Results & Reports
+packages/playwright-runner/test-results
+packages/playwright-runner/playwright-report
+
+# System & IDE
+.DS_Store
+.vscode
+.idea
+*.log
+
+# Environment
+.env
+.env.*
+!.env.example
