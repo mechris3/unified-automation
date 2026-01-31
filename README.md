@@ -1,6 +1,9 @@
-# Unified Automation Framework
+# 💎 Unified Automation Framework
 
-A portable, modular, and browser-agnostic automation framework designed for modern web applications. This framework unifies test logic across multiple browser engines (Puppeteer, Playwright) and provides an enterprise-standard architecture for scalable testing.
+![Unified Automation Dashboard](doc/images/dashboard.png)
+
+A portable, drop-in browser automation framework designed for professional-grade developer experience.
+This framework unifies test logic across multiple browser engines (Puppeteer, Playwright) and provides an enterprise-standard architecture for scalable testing.
 
 ---
 
