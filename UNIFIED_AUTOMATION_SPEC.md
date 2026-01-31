@@ -4,6 +4,14 @@ This document serves as a complete blueprint for generating the `unified-automat
 
 **Goal:** Create a portable, drop-in testing framework that executes the SAME test logic using either Puppeteer (for fast development/debugging) or Playwright (for robust CI/CD).
 
+## 1.1 Mandatory Selector Standard
+
+**CRITICAL**: All Page Objects and Journeys **MUST** use standard CSS selectors only to ensure engine-agnostic execution.
+
+- ❌ **PROHIBITED**: Playwright-specific locators (`has-text`, `:has()`, `get_by_label`).
+- ❌ **PROHIBITED**: Non-standard Puppeteer-specific pseudoclasses.
+- ✅ **REQUIRED**: Standard CSS selectors (e.g., `[data-testid="..."]`, `[role="..."]`, `.class-name`).
+
 ## 1. Directory Structure
 
 The generated repository should look like this:

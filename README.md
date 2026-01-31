@@ -152,11 +152,17 @@ Sometimes standard `.click()` or `.fill()` isn't enough for complex custom contr
 
 ---
 
-## 🎯 Element Selection Best Practices
+### 🕹️ Selector Selection Strategy
 
-1.  **Priority 1: `data-testid`**: Always the best choice. Resilient to styling changes.
-2.  **Priority 2: ARIA Roles**: Good for accessibility (e.g. `[role="button"]`).
-3.  **Forbidden: Deep CSS/XPath**: Never use `div > div > span > button`. These break if a single wrapper is added to the UI.
+To remain engine-agnostic and ensure 100% compatibility between Puppeteer and Playwright, you **MUST** use standard CSS selectors only.
+
+1.  **Mandatory Standard: CSS Selectors**: Only use selectors that are valid in any standard CSS environment.
+2.  **Priority 1: `data-testid`**: The most resilient choice (e.g., `[data-testid="login-btn"]`).
+3.  **Priority 2: ARIA Roles**: Great for accessibility and stability (e.g., `[role="button"]`).
+4.  **Strictly Forbidden: Engine-Specific Locators**: Never use Playwright-only selectors like `has-text`, `:has()`, or `get_by_label`. These will cause runtime failures in Puppeteer.
+
+> [!IMPORTANT]
+> Adhering to standard CSS is the foundation of the "Unified" promise. Avoid engine-specific shortcuts to keep your tests portable.
 
 ---
 
