@@ -3,7 +3,11 @@ import * as path from 'path';
 
 const config: PlaywrightTestConfig = {
   testDir: './tests',
-  timeout: 30000,
+  // Increased timeout for complex multi-step journeys
+  timeout: 60000,
+  
+  // Parallel execution for performance on modern hardware
+  // NOTE: Disable (fullyParallel: false, workers: 1) if tests share database state
   fullyParallel: true,
   workers: process.env.CI ? 1 : '100%',
   retries: 0,

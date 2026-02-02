@@ -1,5 +1,6 @@
 import { Page } from '@playwright/test';
 import { UnifiedAdapter } from './unified-adapter.interface';
+import { clickWithAngularSupport, fillWithAngularEvents, waitForElement, getTextSafe, scrollIntoViewAndClick } from './playwright-utils';
 
 export class PlaywrightAdapter implements UnifiedAdapter {
   constructor(private page: Page) {}
@@ -9,15 +10,24 @@ export class PlaywrightAdapter implements UnifiedAdapter {
   }
 
   async click(selector: string): Promise<void> {
-    await this.page.locator(selector).click();
+    try {
+      await clickWithAngularSupport(this.page, selector);
+    } catch (error: any) {
+      // Viewport fallback: scroll element into view if it's outside the viewport
+      if (error.message?.includes('outside of the viewport') || error.message?.includes('not visible')) {
+        await scrollIntoViewAndClick(this.page, selector);
+      } else {
+        throw error;
+      }
+    }
   }
 
   async fill(selector: string, value: string): Promise<void> {
-    await this.page.locator(selector).fill(value);
+    await fillWithAngularEvents(this.page, selector, value);
   }
 
   async waitForSelector(selector: string): Promise<void> {
-    await this.page.locator(selector).waitFor({ state: 'visible' });
+    await waitForElement(this.page, selector);
   }
 
   async isVisible(selector: string): Promise<boolean> {
@@ -30,7 +40,8 @@ export class PlaywrightAdapter implements UnifiedAdapter {
   }
 
   async waitForTimeout(ms: number): Promise<void> {
-    await this.page.waitForTimeout(ms);
+    // Use JavaScript setTimeout for consistency with Puppeteer
+    await new Promise(resolve => setTimeout(resolve, ms));
   }
 
   async isDisabled(selector: string): Promise<boolean> {
@@ -38,7 +49,7 @@ export class PlaywrightAdapter implements UnifiedAdapter {
   }
 
   async getText(selector: string): Promise<string> {
-    return await this.page.locator(selector).textContent() || '';
+    return await getTextSafe(this.page, selector);
   }
 
   async getInputValue(selector: string): Promise<string> {

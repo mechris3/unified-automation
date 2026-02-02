@@ -1,5 +1,6 @@
 import { Page } from 'puppeteer';
 import { UnifiedAdapter } from './unified-adapter.interface';
+import { clickWithAngularSupport, fillWithAngularEvents, waitForElement } from './puppeteer-utils';
 
 export class PuppeteerAdapter implements UnifiedAdapter {
   constructor(private page: Page) {}
@@ -9,42 +10,15 @@ export class PuppeteerAdapter implements UnifiedAdapter {
   }
 
   async click(selector: string): Promise<void> {
-    await this.page.waitForSelector(selector, { visible: true });
-    // Angular/React safe click: ensure pointer-events are not none
-    await this.page.waitForFunction(
-      (sel) => {
-        const el = document.querySelector(sel as string);
-        return el && getComputedStyle(el).pointerEvents !== 'none';
-      }, { timeout: 5000 }, selector
-    );
-    
-    // Perform standard click
-    await this.page.click(selector);
-    
-    // Dispatch MouseEvent for frameworks that might miss the standard click
-    await this.page.evaluate((sel) => {
-      const el = document.querySelector(sel as string) as HTMLElement;
-      if (el) {
-        el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-      }
-    }, selector);
+    await clickWithAngularSupport(this.page, selector);
   }
 
   async fill(selector: string, value: string): Promise<void> {
-    await this.page.waitForSelector(selector, { visible: true });
-    // Trigger input/change events for frameworks like Angular/React
-    await this.page.evaluate((sel, val) => {
-      const el = document.querySelector(sel as string) as HTMLInputElement;
-      if (el) {
-        el.value = val;
-        el.dispatchEvent(new Event('input', { bubbles: true }));
-        el.dispatchEvent(new Event('change', { bubbles: true }));
-      }
-    }, selector, value);
+    await fillWithAngularEvents(this.page, selector, value);
   }
 
   async waitForSelector(selector: string): Promise<void> {
-    await this.page.waitForSelector(selector, { visible: true });
+    await waitForElement(this.page, selector);
   }
 
   async isVisible(selector: string): Promise<boolean> {
